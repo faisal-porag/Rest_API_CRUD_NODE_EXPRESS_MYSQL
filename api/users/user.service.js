@@ -92,5 +92,19 @@ module.exports = {
         return callBack(null, results[0]);
       }
     )
+  },
+
+  //Authentication User (Login)
+  userAuthenticationByEmail: (data, callBack)=>{
+    pool.query(
+      `select * from personal_info where email = ?`,
+      [data.email],
+      (error, results, fields)=>{
+        if(error){
+          callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    )
   }
 };
