@@ -1,5 +1,19 @@
-const { create, getUsers, getUserByUserId, updateUserById, deleteUserById } = require('./user.service');
-const { hashSync, genSaltSync } = require('bcrypt');
+const { 
+    create, 
+    getUsers, 
+    getUserByUserId, 
+    updateUserById, 
+    deleteUserById,
+    userAuthenticationByEmail
+} = require('./user.service');
+
+const { 
+    hashSync, 
+    genSaltSync,
+    compareSync
+} = require('bcrypt');
+
+const { sign } = require('jsonwebtoken');
 
 const dbErrMsg = "System can not deal your request at this time.Please try after some times..";
 
@@ -73,6 +87,12 @@ module.exports = {
                     message: dbErrMsg
                 });
             }
+            if(!results){
+                return res.json({
+                    success: 0,
+                    message: "Failed to update process!"
+                });
+            }
             return res.status(200).json({
                 success: 1,
                 message: "Information updated successfully!"
@@ -94,6 +114,43 @@ module.exports = {
                 success: 1,
                 message: "Information deleted successfully!"
             });
+        });
+    },
+
+    checkAuthUserByEmail: (req, res)=>{
+        const body = req.body;
+        const strEmail = body.email;
+        userAuthenticationByEmail(strEmail, (err, results)=>{
+            if(err) {
+                console.log(err);
+                return res.json({
+                    success:0,
+                    message: dbErrMsg
+                });
+            }
+            if(!results){
+                return res.json({
+                    success: 0,
+                    message: "Invalid Email or Password!"
+                });
+            }
+            const checkData = compareSync(body.password, results.password);
+            if(checkData){
+                body.password = undefined;
+                const strJsonToken = sign({ result: results }, process.env.Auth_Secret_Key, {
+                    expiresIn: "1h"
+                });
+                return res.json({
+                    success: 1,
+                    message: "Login succesfully.",
+                    token: strJsonToken
+                });
+            }else{
+                return res.json({
+                    success: 0,
+                    message: "Invalid Email or Password!"
+                });
+            }
         });
     }
 }
