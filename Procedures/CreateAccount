@@ -1,0 +1,33 @@
+DELIMITER $$
+
+CREATE PROCEDURE CreateAccount (
+  IN `name` VARCHAR(255), 
+  IN `lname` VARCHAR(255), 
+  IN `phone` VARCHAR(25), 
+  IN `description` VARCHAR(255)
+)
+
+BEGIN
+    DECLARE l_account_id INT DEFAULT 0;
+    
+    START TRANSACTION;
+    -- Insert account data
+    INSERT INTO accounts(first_name, last_name)
+    VALUES(fname, lname);
+    
+    -- get account id
+    SET l_account_id = LAST_INSERT_ID();
+    
+    -- insert phone for the account
+    IF l_account_id > 0 THEN
+	INSERT INTO phones(account_id, phone, description)
+        VALUES(l_account_id,phone,description);
+        -- commit
+        COMMIT;
+     ELSE
+	ROLLBACK;
+    END IF;
+    
+END$$
+
+DELIMITER ;
