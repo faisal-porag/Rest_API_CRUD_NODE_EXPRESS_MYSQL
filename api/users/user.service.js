@@ -53,6 +53,24 @@ module.exports = {
       }
     );
   },
+  
+  //Get Users Details Information by ID
+  //Call Procedure GetUserDetailsInfo
+  getUserDetailsInfoByUserId: (data, callBack) => {
+    console.log(data.Id)
+    pool.query(
+      `call GetUserDetailsInfo (?)`,
+      [
+        data.Id
+      ],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
+  },
 
   //Update User info
   updateUserById: (data, callBack)=>{
