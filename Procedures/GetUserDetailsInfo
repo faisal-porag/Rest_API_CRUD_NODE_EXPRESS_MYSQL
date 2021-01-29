@@ -1,0 +1,15 @@
+DELIMITER $$
+
+CREATE PROCEDURE GetUserDetailsInfo (
+	IN  userId INT(11)
+)
+
+BEGIN
+	SELECT p.first_name, p.last_name, p.email, p.gender, p.phone_number, 
+  ad.location_name, ad.city, ad.postal_code 
+  FROM `personal_info` p 
+  left join user_address ad on p.Id = ad.pid 
+  WHERE p.Id = userId;
+END$$
+
+DELIMITER ;
