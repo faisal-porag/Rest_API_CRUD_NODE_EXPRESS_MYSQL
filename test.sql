@@ -6,6 +6,7 @@
 -- Generation Time: Jan 29, 2021 at 09:08 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
+-- Author: FAISAL PORAG
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `test`
+-- Database: `test_db`
 --
 
 DELIMITER $$
@@ -49,7 +50,7 @@ END$$
 
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserDetailsInfo` (IN `userId` INT(11) UNSIGNED)  BEGIN
-    SELECT p.first_name, p.last_name, p.email, p.gender, 			       p.phone_number, ad.location_name, ad.city, ad.postal_code
+    SELECT p.first_name, p.last_name, p.email, p.gender, p.phone_number, ad.location_name, ad.city, ad.postal_code
     FROM `personal_info` p
     left join user_address ad on p.Id = ad.pid
 
@@ -96,14 +97,6 @@ CREATE TABLE `personal_info` (
 --
 -- Dumping data for table `personal_info`
 --
-
-INSERT INTO `personal_info` (`Id`, `first_name`, `last_name`, `email`, `gender`, `password`, `phone_number`) VALUES
-(1, 'Faisal', 'Porag', 'porag1324@gmail.com', 'm', '$2b$10$dyJMN8kU4aJXB2pqu0hUKeRPdGbOXKNdoL62eXR0QGyVMmwaRwDHW', '01622310751'),
-(2, 'Salaha', 'Sultana', 'sumi@gmail.com', 'f', '$2b$10$.lxBIALX1JlLafKzjhjbheSeWmAUPRC6vRBQgj.geYe0rK1QRKkzO', '01741337720'),
-(4, 'Test1', 'Abc1', 'sdfs11dfds@gmail.com', 'f', '$2b$10$qlA0Ap9b/tV9ZVC9KOZUr.kClb/VAtxomGdEVegS3txvuZ56OUwQe', '016556452652'),
-(5, 'Test2', 'Abc2', 'abc2@gmail.com', 'f', '$2b$10$v0PyssCxari6JZDi/4sOQu3l2AzT6f7vC5OhIxbqqP6mGhbQt9wMS', '01741337720'),
-(6, 'Test3', 'Abc3', 'abc3@gmail.com', 'f', '$2b$10$YniCgI5scwzQqXM4rJ5lb.H8LTcO4SidMAzSPFZBPvhystu.oKNi6', '01741337720');
-
 -- --------------------------------------------------------
 
 --
@@ -120,10 +113,6 @@ CREATE TABLE `phones` (
 --
 -- Dumping data for table `phones`
 --
-
-INSERT INTO `phones` (`phone_id`, `account_id`, `phone`, `description`) VALUES
-(1, 1, '(408)-456-4567', 'Emergency Contact');
-
 -- --------------------------------------------------------
 
 --
@@ -141,10 +130,6 @@ CREATE TABLE `user_address` (
 --
 -- Dumping data for table `user_address`
 --
-
-INSERT INTO `user_address` (`Id`, `pid`, `location_name`, `city`, `postal_code`) VALUES
-(1, 6, 'West raza bazar', 'Dhaka', '1236');
-
 --
 -- Indexes for dumped tables
 --
