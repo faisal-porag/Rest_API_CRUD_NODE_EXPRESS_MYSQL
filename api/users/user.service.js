@@ -96,9 +96,10 @@ module.exports = {
 
   //Authentication User (Login)
   userAuthenticationByEmail: (data, callBack)=>{
+    console.log(data);
     pool.query(
       `select * from personal_info where email = ?`,
-      [data.email],
+      [data],
       (error, results, fields)=>{
         if(error){
           callBack(error);
