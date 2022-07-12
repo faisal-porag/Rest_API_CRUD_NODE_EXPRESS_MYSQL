@@ -1,6 +1,6 @@
 # RESR API CRUD APPLICATION WITH MYSQL DATABASE
 
-
+#### Sample app.ja file example 
 ```shell
 require('dotenv').config();
 const express = require("express");
